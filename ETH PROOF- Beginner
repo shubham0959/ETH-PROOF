@@ -1,0 +1,25 @@
+pragma solidity ^0.8.0;
+
+contract MyCustomToken {
+
+    
+    string public tokenName = "MyCustomToken";
+    string public tokenSymbol = "MCT";
+    uint256 public totalTokens;
+
+    
+    mapping(address => uint256) public tokenBalances;
+
+    
+    function mintTokens(address recipient, uint256 amount) public {
+        totalTokens += amount;
+        tokenBalances[recipient] += amount;
+    }
+
+    
+    function burnTokens(address owner, uint256 amount) public {
+        require(tokenBalances[owner] >= amount, "Insufficient balance to burn");
+        totalTokens -= amount;
+        tokenBalances[owner] -= amount;
+    }
+}
