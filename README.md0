@@ -28,34 +28,38 @@ To run this program, you can use Remix, an online Solidity IDE. To get started, 
 Once you are on the Remix website, create a new file by clicking on the "+" icon in the left-hand sidebar. Save the file with a .sol extension (e.g., MyToken.sol). 
 Copy and paste the following code into the file:
 
-// SPDX-License-Identifier: MIT
-pragma solidity 0.8.18;
-contract myToken {
 
-    string public tokenName = "AELPH";
-    string public tokenAbbrv = "ALP";
-    uint public totSupply = 0; 
-
-    mapping(address => uint) public balances;
-
-    function mint(uint _value, address _address) public {
-        totSupply += _value;
-        balances[_address] += _value;
-    }
-
-    function burn(uint _value, address _address) public {
-        if (balances[_address] >= _value){
-            totSupply -= _value;
-            balances[_address] -= _value;
-        }
-    }
-}
 
 ## Help
 
 To compile the code, click on the "Solidity Compiler" tab in the left-hand sidebar. Make sure the "Compiler" option is set to "0.8.18" 
 (or another compatible version), and then click on the "Compile MyToken.sol" button.
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
+contract MyCustomToken {
+
+
+    string public tokenName = "MyCustomToken";
+    string public tokenSymbol = "MCT";
+    uint256 public totalTokens;
+
+    
+    mapping(address => uint256) public tokenBalances;
+
+
+    function mintTokens(address recipient, uint256 amount) public {
+        totalTokens += amount;
+        tokenBalances[recipient] += amount;
+    }
+
+    
+    function burnTokens(address owner, uint256 amount) public {
+        require(tokenBalances[owner] >= amount, "Insufficient balance to burn");
+        totalTokens -= amount;
+        tokenBalances[owner] -= amount;
+    }
+}
 Once the code is compiled, you can deploy the contract by clicking on the "Deploy & Run Transactions" tab in the left-hand sidebar. 
 Select the "Mytoken" contract from the dropdown menu, and then click on the "Deploy" button.
 
